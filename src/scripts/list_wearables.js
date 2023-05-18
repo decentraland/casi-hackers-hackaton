@@ -75,11 +75,13 @@ async function main() {
         let urn = wearable.urn;
         const parts = urn.split(":");
         const itemId = parts[parts.length - 1];
+        let files = wearable.entity.content;
+        let thumbnail = files[files.length - 1].hash;
         let metadata = {
           "urn": urn,
           "name": wearable.name,
           "description": wearable.entity.metadata.description,
-          "thumbnail": wearable.thumbnail,
+          "thumbnail": `https://peer-ec2.decentraland.org/content/contents/${thumbnail}`,
           "marketplace": `https://market.decentraland.org/contracts/${wearable.entity.metadata.collectionAddress}/items/${itemId}`,
           "category": wearable.category,
           "tags": wearable.entity.metadata.data.tags
