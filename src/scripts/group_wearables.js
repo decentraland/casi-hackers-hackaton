@@ -31,7 +31,6 @@ function readAllWearables() {
 }
 
 async function main() {
-  // console.log(response);
   let allWearables = readAllWearables();
   let ai_categories_bucket = {};
 
@@ -46,9 +45,6 @@ async function main() {
       };
     };
   };
-
-
-  console.log(ai_categories_bucket);
 
   const sortedArray = Object.entries(ai_categories_bucket)
     .sort((a, b) => b[1] - a[1]);
