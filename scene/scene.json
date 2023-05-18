@@ -1,0 +1,44 @@
+{
+  "ecs7": true,
+  "runtimeVersion": "7",
+  "display": {
+    "title": "coso",
+    "favicon": "favicon_asset"
+  },
+  "contact": {
+    "name": "",
+    "email": ""
+  },
+  "owner": "",
+  "main": "bin/game.js",
+  "tags": [],
+  "spawnPoints": [
+    {
+      "name": "spawn1",
+      "default": true,
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 8
+      },
+      "cameraTarget": {
+        "x": 8,
+        "y": 1,
+        "z": 0
+      }
+    }
+  ],
+  "requiredPermissions": [
+    "ALLOW_MEDIA_HOSTNAMES"
+  ],
+  "allowedMediaHostnames": [
+    "peer.decentraland.org"
+  ],
+  "scene": {
+    "parcels": [
+      "0,0"
+    ],
+    "base": "0,0"
+  },
+  "name": "coso"
+}
