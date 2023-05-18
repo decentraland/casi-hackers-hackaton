@@ -1,0 +1,36 @@
+{
+  "wearables": [
+    {
+      "urn": "urn:decentraland:matic:collections-v2:0xdc1b7c187ec88928550cba791812124668a92403:0",
+      "name": "Xmas Little One by MetaZoo Intl.",
+      "description": "Reindeer Christmas 2021 Little One By MetaZoo International  ",
+      "thumbnail": "https://peer-ec2.decentraland.org/content/contents/QmaofAcXgJdCmrxbBBkLD7WcUZWLfn7AuAQEiDNRmx6RdQ",
+      "tags": [
+        "metazoo",
+        "mz",
+        "xmas",
+        "santa",
+        "christmas"
+      ],
+      "clarifai": [
+        {
+          "id": "funny",
+          "percentage": 0.98
+        },
+        {
+          "id": "Christmas",
+          "percentage": 0.94
+        },
+        {
+          "id": "isolated",
+          "percentage": 0.94
+        },
+        {
+          "id": "illustration",
+          "percentage": 0.93
+        }
+      ],
+      "category": "upper_body"
+    }
+  ]
+}
