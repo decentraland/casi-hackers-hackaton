@@ -81,7 +81,7 @@ async function main() {
           "urn": urn,
           "name": wearable.name,
           "description": wearable.entity.metadata.description,
-          "thumbnail": `https://peer-ec2.decentraland.org/content/contents/${thumbnail}`,
+          "thumbnail": `https://peer.decentraland.org/content/contents/${thumbnail}`,
           "marketplace": `https://market.decentraland.org/contracts/${wearable.entity.metadata.collectionAddress}/items/${itemId}`,
           "category": wearable.category,
           "tags": wearable.entity.metadata.data.tags
