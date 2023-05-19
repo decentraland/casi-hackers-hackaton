@@ -1,45 +1,90 @@
-import ReactEcs, { ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
-import { wearableComponent } from './components/wearable'
-import { categoryComponent } from './components/category'
-import { Outfit, Wearable } from '../categories/types'
+import ReactEcs, { Label, ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
+import { Color4 } from '@dcl/sdk/math'
 
-// change to event
-let onChangeCallback: (outfit: string) => void
-let outfits: Map<string, Outfit>
+import { getWearables, WearableResponse } from '../scripts'
+import { categories as wearableCategories } from '../scripts/data/wearables'
+import { WearableComponent } from './components/wearable'
+import { capitalizeString, CategoryComponent } from './components/category'
 
-let wearables: Wearable[] = []
+const categories = ['sport', 'elegant', 'fun', 'classic', 'retro', 'business', 'futuristic']
+let wearables: WearableResponse = getWearables('sport', 1)
+let outfits: Record<string, string> = {}
+let selectedCategory: string | undefined
 
-const uiWearables =
-  wearables.map(w => wearableComponent(w.thumbnail, w.name, false, w.marketplace))
-
-
-const uiComponent = () => (
-  <UiEntity>
-    <UiEntity
+const uiComponent = () => {
+  return <UiEntity
       uiTransform={{
-        width: 400,
-        height: 200,
+        positionType: 'absolute',
+        position: { right: 0, top: 0 },
+        width: 300,
+        height: '100%',
         flexDirection: "column",
         display: 'flex',
-        margin: { top: '200px' }
+        padding: { top: '80px' }
       }}
-    ></UiEntity>
-    {
-      uiWearables
-    }
-  </UiEntity>
-)
-
-export function setupUi(_outfits: Map<string, Outfit>, callback: (outfitCategory: string) => void) {
-  ReactEcsRenderer.setUiRenderer(uiComponent)
-  outfits = _outfits
-  onChangeCallback = callback
-
-  // TODO: borrar
-  onOutfitChanged("sports")
+      uiBackground={{ color: Color4.fromHexString('#23242cff') }}
+    >
+      { !selectedCategory
+        ? <UiEntity uiTransform={{ flexDirection: "column", margin: { top: 16 } }}>
+          {categories.map(c => <CategoryComponent name={c} onClick={() => handleCategory(c)} />)}
+        </UiEntity>
+        : <UiEntity uiTransform={{ flexDirection: "column" }}>
+            <UiEntity
+            uiTransform={{ width: '100%', height: 40, flexDirection: 'row', position: { top: 8 }, alignItems: 'center' }}
+          >
+            <UiEntity
+              onMouseDown={() => handleCategory(undefined)}
+              uiTransform={{ width: 12, height: 12, margin: { left: 16, right: 8  } }}
+              uiBackground={{ textureMode: 'nine-slices', texture: { src: 'https://i.postimg.cc/pdf0Rg1Q/BackIcn.png' }, textureSlices: { top: 0, bottom: 0, left: 0, right: 0 } }}
+            />
+            <Label uiTransform={{ width: 60, height: 20 }} fontSize={16} value={`${capitalizeString(selectedCategory)} outfit`} textAlign='middle-left' />
+            <UiEntity
+              uiTransform={{ width: 14, height: 14, position: { right: 30 }, positionType: 'absolute' }}
+              uiBackground={{ textureMode: 'nine-slices', texture: { src: 'https://i.postimg.cc/GpSGGKN8/RetryIcn.png' }, textureSlices: { top: 0, bottom: 0, left: 0, right: 0 } }}
+            />
+          </UiEntity>
+          {wearableCategories.map(wearableCategories => <WearableComponent category={selectedCategory!} wearableCategory={wearableCategories} wearables={wearables[wearableCategories]} /> )}
+        </UiEntity>
+      }
+      </UiEntity>
 }
 
-function onOutfitChanged(name: string) {
-  wearables = outfits.get(name)!
-  onChangeCallback(name)
+export function updateBackpack(wearablesUrn: { wearablesUrn: string[]}) {
+  return update(wearablesUrn)
+}
+
+type UpdateFn = (urn: { wearablesUrn: string[]}) => void
+let update: UpdateFn
+export function setupUi(updateBackpack: { update: UpdateFn }) {
+  ReactEcsRenderer.setUiRenderer(uiComponent)
+  update = updateBackpack.update
+  updateBackpack.update({ wearablesUrn: Object.values(outfits) })
+  resetOutfit()
+}
+
+export const updateOutfit = (value: Record<string, string>) => {
+  const urns = Object.values(value)
+  const oldUrns = Object.values(outfits)
+  const isDiff = !!urns.find(u => !oldUrns.includes(u))
+  if (isDiff) {
+    outfits = { ...outfits, ...value }
+    updateBackpack({ wearablesUrn: Object.values(outfits) })
+  }
+}
+
+
+function resetOutfit() {
+  const preOutfit: Record<string, string> = {}
+  for (const c of wearableCategories) {
+    preOutfit[c] = wearables[c] && wearables[c][0].urn || ''
+  }
+  updateOutfit(preOutfit)
+}
+
+function handleCategory(category?: string) {
+  selectedCategory = category
+  if (category) {
+    wearables = getWearables(category, 1)
+    resetOutfit()
+  }
 }

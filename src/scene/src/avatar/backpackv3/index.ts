@@ -1,8 +1,7 @@
 import { AvatarAnchorPointType, AvatarAttach, AvatarShape, CameraModeArea, CameraType, Transform, engine } from "@dcl/sdk/ecs";
 
-export function backpackV3() {
+export const backpackV3 = () => {
     const AVATAR_ID = 'backpackV3'
-
     const rootEntity = engine.addEntity()
     const avatarEntity = engine.addEntity()
     const cameraModeAreaEntity = engine.addEntity()
@@ -27,7 +26,6 @@ export function backpackV3() {
 
     function update(opt: UpdateOpt) {
         const avatar = AvatarShape.getMutable(avatarEntity)
-
         if (!!opt.wearablesUrn)
             avatar.wearables = opt.wearablesUrn
 
@@ -45,7 +43,7 @@ export function backpackV3() {
 
     }
 
-    return { update }
+    return { update, AVATAR_ID, test: () => console.log('boedo') }
 }
 
 export type UpdateOpt = {

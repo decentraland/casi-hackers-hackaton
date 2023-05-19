@@ -32,7 +32,10 @@
     "ALLOW_MEDIA_HOSTNAMES"
   ],
   "allowedMediaHostnames": [
-    "peer.decentraland.org"
+    "peer.decentraland.org",
+    "static.thenounproject.com",
+    "i.postimg.cc",
+    "peer-ec2.decentraland.org"
   ],
   "scene": {
     "parcels": [
@@ -40,5 +43,5 @@
     ],
     "base": "0,0"
   },
-  "name": "coso"
+  "name": "Casi Hackers"
 }
