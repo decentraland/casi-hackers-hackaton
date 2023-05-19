@@ -3,6 +3,9 @@ import { getUserData } from "~system/UserIdentity"
 import { backpackV3 } from './avatar/backpackv3'
 import { setupUi } from './ui'
 import { Outfit } from './categories/types'
+import { createAmbient } from './ambient'
+
+createAmbient(true, true)
 
 let outfits: Map<string, Outfit>
 
