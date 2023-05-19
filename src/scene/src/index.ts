@@ -1,7 +1,7 @@
 import { openExternalUrl } from "~system/RestrictedActions"
 import { InputAction, PointerEventType, engine, executeTask, inputSystem } from '@dcl/sdk/ecs'
 import { getUserData } from "~system/UserIdentity"
-import { backpackV3 } from './avatar/backpackv3'
+import { backpackV3 } from './avatar'
 import { setupUi } from './ui'
 import { createAmbient } from './ambient'
 

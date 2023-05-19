@@ -1,6 +1,6 @@
 import { Color4 } from '@dcl/sdk/math'
 import ReactEcs, { Button, Label, UiEntity } from '@dcl/sdk/react-ecs'
-import { Wearable } from '../../categories/types';
+import { Wearable } from '../../types';
 import { updateOutfit } from '..';
 import { mappedCategories } from '../../scripts/data/wearables';
 import { updateMarketplaceUrl } from '../..';
@@ -28,7 +28,7 @@ export const WearableComponent = ({ category, wearableCategory, wearables }: { c
         >
           <Label fontSize={14} uiTransform={{ height: 15, width: '100%', margin: { bottom: 6, top: 6 } }} value={mappedCategories[wearableCategory]} textAlign='middle-left'/>
           <Label fontSize={16} uiTransform={{ height: 15, width: '100%', margin: { bottom: 6, top: 6 } }} value={name.slice(0, 10)} textAlign='middle-left'/>
-          {purchaseComponent(false, marketplace)}
+          <PurchaseComponent owned={false} url={marketplace} />
         </UiEntity>
         <UiEntity
           uiTransform={{ flexDirection: 'row', width: '30', height: '100%', position: { right: 0 }, positionType: 'absolute' }}
@@ -52,8 +52,8 @@ export const WearableComponent = ({ category, wearableCategory, wearables }: { c
     )
   }
 
-  const purchaseComponent = (owned: boolean, url: string) => {
-    if (owned) return undefined
+  const PurchaseComponent = (props: { owned: boolean, url: string }) => {
+    if (props.owned) return null
     return (
       <Button
       uiTransform={{ height: 25, width: 80, margin: { left: 20, top: 6 }}}
@@ -62,7 +62,7 @@ export const WearableComponent = ({ category, wearableCategory, wearables }: { c
       variant='primary'
       fontSize={14}
       onMouseDown={() => {
-        updateMarketplaceUrl(url)
+        updateMarketplaceUrl(props.url)
       }}
       />
       )

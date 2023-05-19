@@ -1,4 +1,4 @@
-import { Wearable } from '../categories/types';
+import { Wearable } from '../types';
 import { wearables, categories } from './data/wearables'
 
 export type WearableResponse = { [key: string]: Wearable[]}
