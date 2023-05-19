@@ -1,9 +1,9 @@
 import { Color4 } from '@dcl/sdk/math'
 import ReactEcs, { Button, Label, UiEntity } from '@dcl/sdk/react-ecs'
-import { openExternalUrl } from "~system/RestrictedActions"
 import { Wearable } from '../../categories/types';
 import { updateOutfit } from '..';
 import { mappedCategories } from '../../scripts/data/wearables';
+import { updateMarketplaceUrl } from '../..';
 
 export let indexWearable = new Map<string, number>()
 export const WearableComponent = ({ category, wearableCategory, wearables }: { category: string, wearableCategory: string; wearables: Wearable[] }) => {
@@ -61,8 +61,8 @@ export const WearableComponent = ({ category, wearableCategory, wearables }: { c
       value='Buy'
       variant='primary'
       fontSize={14}
-      onMouseDown={async () => {
-        await openExternalUrl({ url: url })
+      onMouseDown={() => {
+        updateMarketplaceUrl(url)
       }}
       />
       )

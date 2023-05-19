@@ -6,8 +6,8 @@ import { categories as wearableCategories } from '../scripts/data/wearables'
 import { WearableComponent } from './components/wearable'
 import { capitalizeString, CategoryComponent } from './components/category'
 
-const categories = ['sport', 'elegant', 'fun', 'classic', 'retro', 'business', 'futuristic']
-let wearables: WearableResponse = getWearables('sport', 1)
+const categories = ['sport', 'elegant', 'fun', 'Christmas', 'futuristic', 'nature', 'classic', 'retro']
+let wearables: WearableResponse = {}
 let outfits: Record<string, string> = {}
 let selectedCategory: string | undefined
 
